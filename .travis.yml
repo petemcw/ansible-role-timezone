@@ -9,21 +9,25 @@ env:
     INIT: /sbin/init
     RUN_OPTS: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     PLAYBOOK: test.yml
+    TIMEZONE_FILE: /etc/sysconfig/clock
   - DISTRIBUTION: ubuntu
     VERSION: 16.04
     INIT: /lib/systemd/systemd
     RUN_OPTS: "--privileged --volume=/sys/fs/cgroup:/sys/fs/cgroup:ro"
     PLAYBOOK: test.yml
+    TIMEZONE_FILE: /etc/timezone
   - DISTRIBUTION: ubuntu
     VERSION: 14.04
     INIT: /sbin/init
     RUN_OPTS: ""
     PLAYBOOK: test.yml
+    TIMEZONE_FILE: /etc/timezone
   - DISTRIBUTION: ubuntu
     VERSION: 12.04
     INIT: /sbin/init
     RUN_OPTS: ""
     PLAYBOOK: test.yml
+    TIMEZONE_FILE: /etc/timezone
 
 # Tell Travis to start Docker when it brings up an environment.
 services:
@@ -58,7 +62,7 @@ script:
 
   # Test the role.
   - >
-    docker exec --tty "$(cat ${container_id})" cat /etc/timezone | grep Etc/UTC
+    docker exec --tty "$(cat ${container_id})" cat ${TIMEZONE_FILE} | grep Etc/UTC
     && (echo 'Run test: pass' && exit 0)
     || (echo 'Run test: fail' && exit 1)
 
