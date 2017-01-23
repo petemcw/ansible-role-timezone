@@ -1,0 +1,5 @@
+---
+# Defines variables for RedHat/CentOS
+
+timezone_packages:
+  - "tzdata"

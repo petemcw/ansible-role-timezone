@@ -1,0 +1,12 @@
+---
+# Handlers for timezone notifications
+
+- name: update tzdata
+  command: >
+    /usr/sbin/dpkg-reconfigure --frontend noninteractive tzdata
+
+- name: restart dependencies
+  service:
+    name: "{{ item }}"
+    state: restarted
+  with_items: "{{ timezone_dependent_services }}"

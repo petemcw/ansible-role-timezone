@@ -1,0 +1,9 @@
+---
+# The variables file used for Timezone playbooks.
+# If not overriden in inventory or as a parameter, this is the value that will be used
+
+timezone_enabled: true
+timezone: Etc/UTC
+zoneinfo_path: "/usr/share/zoneinfo/"
+localtime_file: "/etc/localtime"
+timezone_dependent_services: []

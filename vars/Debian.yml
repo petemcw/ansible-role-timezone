@@ -1,0 +1,5 @@
+---
+# Defines variables for Debian/Ubuntu
+
+timezone_packages:
+  - "tzdata"

@@ -1,0 +1,7 @@
+---
+# Defines tasks to configure the Timezone
+
+- include: timezone.yml
+  when: timezone_enabled
+  tags:
+    - timezone

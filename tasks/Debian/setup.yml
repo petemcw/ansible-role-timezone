@@ -1,0 +1,13 @@
+---
+# Defines tasks for Debian/Ubuntu installation
+
+- name: Set the system timezone
+  template: >
+    src=timezone.j2
+    dest=/etc/timezone
+    mode=0644 owner=root group=root
+  notify:
+    - update tzdata
+    - restart dependencies
+  tags:
+    - timezone

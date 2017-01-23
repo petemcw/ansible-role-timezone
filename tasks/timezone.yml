@@ -1,0 +1,42 @@
+---
+# Defines tasks to configure the Timezone
+
+- name: Gather OS specific varibles
+  include_vars: "{{ item }}"
+  with_first_found:
+    - "{{ ansible_distribution }}-{{ ansible_distribution_major_version }}.yml"
+    - "{{ ansible_distribution }}.yml"
+    - "{{ ansible_os_family }}.yml"
+  tags:
+    - timezone
+
+- include: "{{ ansible_os_family }}/install.yml"
+  static: no
+  tags:
+    - timezone
+
+- name: Validate desired timezone
+  stat: >
+    path="{{ zoneinfo_path }}{{ timezone }}"
+  register: timezone_file
+
+- name: Fail on bad timezone name
+  fail: >
+    msg="{{ timezone }} is not a valid timezone"
+  when: timezone_file.stat.exists == false
+
+- include: "{{ ansible_os_family }}/setup.yml"
+  static: no
+  tags:
+    - timezone
+
+- name: Set the system localtime
+  file: >
+    src="{{ zoneinfo_path }}{{ timezone }}"
+    dest="{{ localtime_file }}"
+    state=link
+    force=yes
+    owner=root
+    group=root
+  tags:
+    - timezone
