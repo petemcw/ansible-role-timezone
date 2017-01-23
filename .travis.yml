@@ -58,7 +58,7 @@ script:
 
   # Test the role.
   - >
-    docker exec --tty "$(cat ${container_id})" cat /etc/timezone | grep Etc/UTC || exit 1
+    docker exec --tty "$(cat ${container_id})" cat /etc/timezone | grep Etc/UTC
     && (echo 'Run test: pass' && exit 0)
     || (echo 'Run test: fail' && exit 1)
 
